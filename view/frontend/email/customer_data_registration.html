@@ -1,0 +1,26 @@
+<!--@subject {{trans "Customer registration notification"} @-->
+
+{{template config_path="design/email/header_template"}}
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr>
+        <td>{{trans "The following customer just registered in the store"}</td>
+    </tr>
+</table>
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+    <thead>
+        <tr>
+            <th>{{trans "First Name"}</th>
+            <th>{{trans "Last Name"}</th>
+            <th>{{trans "Email"}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{var firstname|raw}}</td>
+            <td>{{var lastname|raw}}</td>
+            <td>{{var email|raw}}</td>
+        </tr>
+    </tbody>
+</table>
+{{template config_path="design/email/footer_template"}}
