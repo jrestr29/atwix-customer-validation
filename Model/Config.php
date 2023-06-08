@@ -43,6 +43,18 @@ class Config
         return $this->getConfigValue($emailAddressPath);
     }
 
+    public function getGeneralContactEmailAddress(): string
+    {
+        $emailAddressPath = 'trans_email/ident_general/email';
+        return $this->getConfigValue($emailAddressPath);
+    }
+
+    public function getGeneralContactEmailName(): string
+    {
+        $emailAddressPath = 'trans_email/ident_general/name';
+        return $this->getConfigValue($emailAddressPath);
+    }
+
     /**
      * @param string $path
      * @return string
