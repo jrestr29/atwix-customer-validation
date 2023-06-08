@@ -11,6 +11,7 @@ use Atwix\CustomerValidation\Model\Config as ConfigModel;
 use Atwix\CustomerValidation\Model\AbstractNotification;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Customer\Api\Data\CustomerInterface;
+use Psr\Log\LoggerInterface;
 
 class Email extends AbstractNotification
 {
@@ -25,17 +26,17 @@ class Email extends AbstractNotification
      */
     private $transportBuilder;
 
-    /**
-     * @param StoreHelper $storeHelper
-     * @param ConfigModel $configModel
-     * @param TransportBuilder $transportBuilder
-     */
     public function __construct(
         StoreHelper $storeHelper,
-        ConfigModel $configModel,
-        TransportBuilder $transportBuilder
+        TransportBuilder $transportBuilder,
+        ConfigModel $config,
+        LoggerInterface $_logger
     ) {
-        parent::__construct($configModel);
+        parent::__construct(
+            $config,
+            $_logger
+        );
+
         $this->storeHelper      = $storeHelper;
         $this->transportBuilder = $transportBuilder;
     }
@@ -74,5 +75,7 @@ class Email extends AbstractNotification
             ->addTo($to)
             ->getTransport();
         $transport->sendMessage();
+
+        return $this;
     }
 }
