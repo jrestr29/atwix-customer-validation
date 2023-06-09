@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Jose Restrepo
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <virtualType name="Atwix\CustomerValidation\Log\CustomerLogger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+            <argument name="fileName" xsi:type="string">/var/log/Atwix_CustomerValidation--CustomerRegister.log</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Atwix\CustomerValidation\Log\CustomerLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">Customer Registration Output Log</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Atwix\CustomerValidation\Log\CustomerLogger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Atwix\CustomerValidation\Log\ExceptionLogger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+            <argument name="fileName" xsi:type="string">/var/log/Atwix_CustomerValidation--Exception.log</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Atwix\CustomerValidation\Log\ExceptionLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">Module Exceptions Log</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Atwix\CustomerValidation\Log\ExceptionLogger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Atwix\CustomerValidation\Model\Notification\Log">
+        <arguments>
+            <argument name="_logger" xsi:type="object">Atwix\CustomerValidation\Log\CustomerLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="Atwix\CustomerValidation\Observer\CustomerRegistration">
+        <arguments>
+            <argument name="_logger" xsi:type="object">Atwix\CustomerValidation\Log\ExceptionLogger</argument>
+        </arguments>
+    </type>
+
+    <preference for="Atwix\CustomerValidation\Api\CustomerValidationInterface"
+                type="Atwix\CustomerValidation\Model\Customer\CustomerValidation" />
+</config>

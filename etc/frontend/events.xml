@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Jose Restrepo
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="customer_register_success">
+        <observer name="atwix_notify_customer_registration"
+                  instance="Atwix\CustomerValidation\Observer\CustomerRegistration" />
+    </event>
+</config>
