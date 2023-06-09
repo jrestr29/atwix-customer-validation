@@ -12,6 +12,7 @@ use Magento\Customer\Api\Data\CustomerInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\ObjectManagerInterface;
+use Psr\Log\LoggerInterface;
 
 class CustomerRegistration implements ObserverInterface
 {
@@ -24,14 +25,20 @@ class CustomerRegistration implements ObserverInterface
      * @var ObjectManagerInterface
      */
     private $objectManager;
+    /**
+     * @var LoggerInterface
+     */
+    private $_logger;
 
     /**
      * @param ObjectManagerInterface $objectManager
      */
     public function __construct(
-        ObjectManagerInterface $objectManager
+        ObjectManagerInterface $objectManager,
+        LoggerInterface $_logger
     ) {
-        $this->objectManager = $objectManager;
+        $this->objectManager    = $objectManager;
+        $this->_logger          = $_logger;
     }
 
     /**
@@ -46,8 +53,14 @@ class CustomerRegistration implements ObserverInterface
         $customer = $observer->getCustomer();
 
         foreach (self::NOTIFY_DESTINATIONS as $destination) {
-            $this->objectManager->create($destination)
-                ->notify($customer);
+            try {
+                $this->objectManager->create($destination)
+                    ->notify($customer);
+            } catch (\Error $e) {
+                $this->_logger->critical(
+                    'Not possible to notify on `' . $destination . '`, ERROR: ' . $e->getMessage()
+                );
+            }
         }
 
         return $this;
