@@ -28,4 +28,7 @@
             <argument name="_logger" xsi:type="object">Atwix\CustomerValidation\Log\Logger</argument>
         </arguments>
     </type>
+
+    <preference for="Atwix\CustomerValidation\Api\CustomerValidationInterface"
+                type="Atwix\CustomerValidation\Model\Customer\CustomerValidation" />
 </config>
