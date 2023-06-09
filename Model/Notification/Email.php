@@ -66,7 +66,6 @@ class Email extends AbstractNotification
         ];
 
         $to = [$this->_config->getSupportEmailAddress()];
-        $to = ['josda6486@gmail.com'];
 
         $transport = $this->transportBuilder->setTemplateIdentifier(self::EMAIL_TEMPLATE)
             ->setTemplateOptions($templateOptions)
