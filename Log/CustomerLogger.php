@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Base logger class to extend from dependency injection config depending on module needs or scope
  */
-class Logger
+class CustomerLogger
 {
     /**
      * @var LoggerInterface

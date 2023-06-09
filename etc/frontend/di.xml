@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--  Override block to isolate namespacing from magento core  -->
+    <preference for="Magento\Customer\Block\Widget\Name"
+                type="Atwix\CustomerValidation\Block\Widget\Name" />
+    <!-- Proceed with plugin on new dedicate namespace for our template change  -->
+    <type name="Atwix\CustomerValidation\Block\Widget\Name">
+        <plugin name="atwix_customervalidation_override_customer_widget_template"
+                type="Atwix\CustomerValidation\Plugin\Customer\Block\Widget\Name" sortOrder="1"/>
+    </type>
+</config>
